@@ -8,12 +8,12 @@ const {
     ExtractJwt
 } = require('passport-jwt');
 
-const {User} = require('../users/models');
-const {JWT_SECRET} = require('../config');
+const {User} = require('../models/users');
+const {JWT_SECRET} = process.env.JWT_SECRET;
 
-const basicStrategy = new BasicStrategy((username, password, callback) => {
+const basicStrategy = new BasicStrategy((email, password, callback) => {
     let user;
-    User.findOne({username: username})
+    User.findOne({email: email})
         .then(_user => {
             user = _user;
             if (!user) {
@@ -21,7 +21,7 @@ const basicStrategy = new BasicStrategy((username, password, callback) => {
                 // Any errors like this will be handled in the catch block.
                 return Promise.reject({
                     reason: 'LoginError',
-                    message: 'Incorrect username or password'
+                    message: 'Incorrect email or password'
                 });
             }
             return user.validatePassword(password);
@@ -30,7 +30,7 @@ const basicStrategy = new BasicStrategy((username, password, callback) => {
             if (!isValid) {
                 return Promise.reject({
                     reason: 'LoginError',
-                    message: 'Incorrect username or password'
+                    message: 'Incorrect email or password'
                 });
             }
             return callback(null, user);
@@ -45,7 +45,7 @@ const basicStrategy = new BasicStrategy((username, password, callback) => {
 
 const jwtStrategy = new JwtStrategy(
     {
-        secretOrKey: JWT_SECRET,
+        secretOrKey: process.env.JWT_SECRET,
         // Look for the JWT as a Bearer auth header
         jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('Bearer'),
         // Only allow HS256 tokens - the same as the ones we issue

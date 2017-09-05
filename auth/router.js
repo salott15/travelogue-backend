@@ -2,12 +2,10 @@ const express = require('express');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 
-const config = require('../config');
-
 const createAuthToken = user => {
-    return jwt.sign({user}, config.JWT_SECRET, {
+    return jwt.sign({user}, process.env.JWT_SECRET, {
         subject: user.username,
-        expiresIn: config.JWT_EXPIRY,
+        expiresIn: process.env.JWT_EXPIRY,
         algorithm: 'HS256'
     });
 };
@@ -17,9 +15,10 @@ const router = express.Router();
 router.post(
     '/login',
     // The user provides a username and password to login
-    passport.authenticate('basic', {session: false}),
+    //passport.authenticate('basic', {session: false}),
     (req, res) => {
-        const authToken = createAuthToken(req.user.apiRepr());
+        console.log("hello", req.body)
+        const authToken = createAuthToken({username:req.body.username, password:req.body.password});
         res.json({authToken});
     }
 );

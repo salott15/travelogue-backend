@@ -10,6 +10,7 @@ exports.newUser = function(req, res) {
     let lastName = lastname.trim();
     email = email.trim();
     password = password.trim();
+    let username = email;
 
     return User.find({email})
         .count()
@@ -19,7 +20,7 @@ exports.newUser = function(req, res) {
                 return Promise.reject({
                     code: 422,
                     reason: 'ValidationError',
-                    message: 'Username already taken',
+                    message: 'Email already in use',
                     location: 'username'
                 });
             }
@@ -32,6 +33,7 @@ exports.newUser = function(req, res) {
                 password: hash,
                 firstname: firstName,
                 lastname: lastName,
+                username,
             });
         })
         .then(user => {
