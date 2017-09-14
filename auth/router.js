@@ -15,7 +15,7 @@ const router = express.Router();
 router.post(
     '/login',
     // The user provides a username and password to login
-    //passport.authenticate('basic', {session: false}),
+    passport.authenticate('basic', {session: false}/*, function(e, u, i) { console.log(':',e,'::',u,':::',i)}*/),
     (req, res) => {
         console.log("hello", req.body)
         const authToken = createAuthToken({username:req.body.username, password:req.body.password});

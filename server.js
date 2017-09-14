@@ -29,8 +29,9 @@ app.use('/api/auth/', authRouter);
 
 app.get(
     '/api/protected',
-    passport.authenticate('jwt', {session: false}),
+    //passport.authenticate('jwt', {session: false}),
     (req, res) => {
+    	console.log("req.body")
         return res.json({
             data: 'rosebud'
         });
