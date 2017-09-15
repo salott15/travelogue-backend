@@ -20,7 +20,8 @@ app.use(passport.initialize());
 passport.use(basicStrategy);
 passport.use(jwtStrategy);
 
-mongoose.connect('mongodb://' + process.env.USER_NAME + ':' + process.env.PASSWORD + '@ds157873.mlab.com:57873/travelogue');
+//mongoose.connect('mongodb://' + process.env.USER_NAME + ':' + process.env.PASSWORD + '@ds157873.mlab.com:57873/travelogue', { useMongoClient: true });
+mongoose.connect('mongodb://127.0.0.1:27017/travelogue-test', { useMongoClient: true });
 console.log(process.env.JWT_EXPIRY);
 app.use("/users", userRoutes)
 app.use("/journals", journalRoutes)
