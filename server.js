@@ -12,17 +12,28 @@ const placeRoutes = require('./routes/place');
 
 const app = express();
 
+mongoose.Promise = global.Promise;
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json())
 app.use(express.static(__dirname + '/public'));
 
-app.use(passport.initialize());
+// CORS
+app.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+    res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE');
+    if (req.method === 'OPTIONS') {
+        return res.send(204);
+    }
+    next();
+});
+
 passport.use(basicStrategy);
 passport.use(jwtStrategy);
+app.use(passport.initialize());
 
-//mongoose.connect('mongodb://' + process.env.USER_NAME + ':' + process.env.PASSWORD + '@ds157873.mlab.com:57873/travelogue', { useMongoClient: true });
-mongoose.connect('mongodb://127.0.0.1:27017/travelogue-test', { useMongoClient: true });
-console.log(process.env.JWT_EXPIRY);
+
 app.use("/users", userRoutes)
 app.use("/journals", journalRoutes)
 app.use("/places", placeRoutes)
@@ -30,7 +41,7 @@ app.use('/api/auth/', authRouter);
 
 app.get(
     '/api/protected',
-    //passport.authenticate('jwt', {session: false}),
+    passport.authenticate('jwt', {session: false}),
     (req, res) => {
     	console.log("req.body")
         return res.json({
@@ -39,6 +50,7 @@ app.get(
     }
 );
 
+mongoose.connect('mongodb://127.0.0.1:27017/travelogue-test', { useMongoClient: true });
 app.listen(process.env.PORT || 3000, function() {
   console.log('server is running on port 3000');
 });
