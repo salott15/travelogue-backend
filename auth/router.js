@@ -19,6 +19,7 @@ router.post(
     // The user provides a username and password to login
     passport.authenticate('basic', {session: false/*, failWithError: true*/}),
     (req, res) => {
+      // console.log('posting:',req);
         const authToken = createAuthToken(req.user);
         res.json({authToken});
     }
