@@ -3,6 +3,7 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 
 const config = require('../config');
+const User = require('../models/users');
 
 const createAuthToken = user => {
     return jwt.sign({user}, config.JWT_SECRET, {
@@ -22,6 +23,7 @@ router.post(
       // console.log('posting:',req);
         const authToken = createAuthToken(req.user);
         res.json({authToken});
+        // res.json(createAuthToken(req.user))
     }
 );
 

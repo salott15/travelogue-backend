@@ -58,6 +58,7 @@ const jwtStrategy = new JwtStrategy(
         algorithms: ['HS256']
     },
     (payload, done) => {
+        console.log('JWT RAN', payload.user);
         done(null, payload.user);
     }
 );
