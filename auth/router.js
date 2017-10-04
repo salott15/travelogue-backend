@@ -6,13 +6,14 @@ const config = require('../config');
 const User = require('../models/users');
 
 var tkn;
+var uid;
 
 const createAuthToken = user => {
     return jwt.sign({user}, config.JWT_SECRET, {
         subject: user.username,
         expiresIn: config.JWT_EXPIRY,
         algorithm: 'HS256'
-    },function(err,data){console.log('data:',data); user.token = data; tkn = data; console.log(user);});
+    },function(err,data){console.log('data:',data); user.token = data; tkn = data; uid = user._id; console.log(user);});
 };
 
 const router = express.Router();
@@ -34,7 +35,7 @@ router.get(
   '/authtoken',
   (req, res) => {
     console.log('tkn',tkn);
-    res.status(200).json({tkn});
+    res.status(200).json({tkn, uid});
 });
 
 router.post(

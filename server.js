@@ -50,7 +50,7 @@ app.get(
     }
 );
 
-mongoose.connect('mongodb://127.0.0.1:27017/travelogue-test', { useMongoClient: true });
-app.listen(process.env.PORT || 3000, function() {
-  console.log('server is running on port 3000');
+mongoose.connect('mongodb://salott:everafter@ds157873.mlab.com:57873/travelogue', { useMongoClient: true });
+app.listen(process.env.PORT || 3001, function() {
+  console.log('server is running on port 3001');
 });
