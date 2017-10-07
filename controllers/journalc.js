@@ -7,9 +7,11 @@ exports.getUserJournals = function(req, res) {
 }
 
 exports.getUserJournalByState = function(req,res) {
-	Journal.find( { state: req.params.state} )
-	.exec().then((data) => {res.status(200).json(data)})
-}
+	Journal.find( { state: req.params.state, _creator: req.params.uid} )
+	.exec().then((data) => {
+		console.log(data);
+		return res.status(200).json(data)})
+} 
 
 exports.newJournal = function(req, res) {
 	req.body._creator = req.params.uid
