@@ -62,7 +62,7 @@ exports.newUser = function(req, res) {
 
  exports.getUser = function (req, res) {
  	User.findById(req.params.uid)
- 	.populate("journalsRef").then((data) => {res.status(200).json(data)})
+    .exec().then((data) => {res.status(200).json(data)});
  }
 
 exports.getUsers = function(req, res) {

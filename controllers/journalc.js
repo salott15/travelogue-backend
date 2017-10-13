@@ -2,9 +2,11 @@ const Journal = require('../models/journals');
 const User = require('../models/users');
 
 exports.getUserJournals = function(req, res) {
-	User.findById(req.params.uid)
-	.populate("journalsRef").then((data) => {res.status(200).json(data)})
-}
+	Journal.find( { _creator: req.params.uid} )
+	.exec().then((data) => {
+		console.log(data);
+		return res.status(200).json(data)})
+} 
 
 exports.getUserJournalByState = function(req,res) {
 	Journal.find( { state: req.params.state, _creator: req.params.uid} )

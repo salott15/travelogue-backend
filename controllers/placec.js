@@ -7,8 +7,10 @@ exports.getUserPlaces = function(req, res) {
 }
 
 exports.getUserPlacesByState = function(req,res) {
-	Place.find( { state: req.params.state} )
-	.exec().then((data) => {res.status(200).json(data)})
+	Place.find( { state: req.params.state, _creator: req.params.uid} )
+	.exec().then((data) => {
+		console.log(data);
+		return res.status(200).json(data)})
 }
 
 exports.newPlace = function(req, res) {
