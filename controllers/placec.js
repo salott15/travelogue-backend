@@ -2,8 +2,13 @@ const Place = require('../models/places');
 const User = require('../models/users');
 
 exports.getUserPlaces = function(req, res) {
+	console.log(req.params.uid)
 	User.findById(req.params.uid)
-	.populate("placesRef").then((data) => {res.status(200).json(data)})
+	.populate("placesRef").exec().then((data) => {
+		console.log(data)
+		res.json(data).then((data) => {
+			return res.status(200).send(data)
+		})})
 }
 
 exports.getUserPlacesByState = function(req,res) {
@@ -14,14 +19,17 @@ exports.getUserPlacesByState = function(req,res) {
 }
 
 exports.newPlace = function(req, res) {
-	req.body._creator = req.params.uid
+	let userId = User.findById(req.params.uid).exec()
+	req.body._creator = userId._id
 	Place.create(req.body)
 	.then((data) => {
+		console.log(data, req.params.uid)
 		User.findByIdAndUpdate(
-			data._creator,
-		    {$push: {"placesRef": req.body}}
+			req.params.uid,
+		    {$push: {"placesRef": data._id}}
     	)
     .then((data) => {
+    	console.log(data)
     return res.status(201).json(data)})})
 }
 

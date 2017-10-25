@@ -7,7 +7,7 @@ const placeC = require('../controllers/placec');
 
 mongoose.Promise = global.Promise;
 
-router.get("/:uid", passport.authenticate('jwt', {session: false, failWithError: true}), placeC.getUserPlaces);
+router.get("/:uid", placeC.getUserPlaces);
 
 router.get("/:uid/:state", placeC.getUserPlacesByState);
 
