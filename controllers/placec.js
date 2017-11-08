@@ -5,7 +5,6 @@ exports.getUserPlaces = function(req, res) {
 	console.log(req.params.uid)
 	User.findById(req.params.uid)
 	.populate("placesRef").exec().then((data) => {
-		console.log('7z',data)
 		res.status(200).json(data)
 	})
 }
@@ -13,7 +12,6 @@ exports.getUserPlaces = function(req, res) {
 exports.getUserPlacesByState = function(req,res) {
 	Place.find( { state: req.params.state, _creator: req.params.uid} )
 	.exec().then((data) => {
-		console.log(data);
 		return res.status(200).json(data)})
 }
 
