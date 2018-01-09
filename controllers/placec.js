@@ -11,13 +11,14 @@ exports.getUserPlaces = function(req, res) {
 
 exports.getUserPlacesByState = function(req,res) {
 	Place.find( { state: req.params.state, _creator: req.params.uid} )
-	.exec().then((data) => {
+	.exec()
+	.then((data) => {
+		console.log(data)
 		return res.status(200).json(data)})
 }
 
 exports.newPlace = function(req, res) {
-	let userId = User.findById(req.params.uid).exec()
-	req.body._creator = userId._id
+	req.body._creator = req.params.uid
 	Place.create(req.body)
 	.then((data) => {
 		console.log(data, req.params.uid)

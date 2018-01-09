@@ -34,5 +34,7 @@ exports.updateJournal = function (req, res) {
 
 exports.deleteJournal = function (req, res) {
 	Journal.findByIdAndRemove(req.params.jid)
-	.exec().then((data) => {res.status(204).json(data)})
+	.exec().then((data) => {
+		console.log("this is" + data)
+		return res.status(204).json(data)})
 }
