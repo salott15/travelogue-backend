@@ -27,8 +27,7 @@ router.post(
       // console.log('posting:',req);
         const authToken = createAuthToken(req.user);
         // res.json({authToken});
-        // res.json(createAuthToken(req.user))
-        res.sendStatus(200);
+        res.json({token: authToken, username: req.user.username})
     }
 );
 
