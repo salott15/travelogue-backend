@@ -38,7 +38,9 @@ app.use("/users", userRoutes)
 app.use("/journals", journalRoutes)
 app.use("/places", placeRoutes)
 app.use('/api/auth/', authRouter);
-
+app.get("/", (req, res) => {
+    res.send("whatever")
+})
 app.get(
     '/api/protected',
     passport.authenticate('jwt', {session: false}),
