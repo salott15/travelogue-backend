@@ -7,6 +7,7 @@ const placeC = require('../controllers/placec');
 
 mongoose.Promise = global.Promise;
 
+
 router.get("/:uid", placeC.getUserPlaces);
 
 router.get("/:uid/:state", placeC.getUserPlacesByState);
