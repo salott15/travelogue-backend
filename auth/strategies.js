@@ -14,7 +14,6 @@ const {JWT_SECRET} = require('../config');
 // const basicStrategy = new BasicStrategy((username, password, callback) => {console.log('(username, password, callback):',username, password, callback);})
 
 const basicStrategy = new BasicStrategy((username, password, callback) => {
-  console.log('BasicStrategy((username, password, callback):',username, password, callback);
     let user;
     User.findOne({email: username})
         .then(_user => {
