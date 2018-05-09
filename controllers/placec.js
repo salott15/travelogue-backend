@@ -10,7 +10,10 @@ exports.getUserPlaces = function(req, res) {
 }
 
 exports.getUserPlacesByState = function(req,res) {
-	Place.find( { state: req.params.state, _creator: req.params.uid} )
+	Place.find( { 
+		state: req.params.state, 
+		_creator: req.params.uid
+	} )
 	.exec()
 	.then((data) => {
 		console.log(data)
