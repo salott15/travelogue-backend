@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const {router: authRouter, basicStrategy, jwtStrategy} = require('./auth');
+const cors = require('cors');
 
 
 const userRoutes = require('./routes/user');
@@ -14,6 +15,7 @@ const app = express();
 
 mongoose.Promise = global.Promise;
 
+app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json())
 app.use(express.static(__dirname + '/public'));
