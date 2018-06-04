@@ -26,8 +26,9 @@ router.post(
     (req, res) => {
 
       // console.log('posting:',req);
+      console.log("response:", res);
         const authToken = createAuthToken(req.user);
-        res.json({token: authToken, email: req.user.email})
+        res.json({token: authToken, email: req.user.email, uid: req.user._id})
     }
 );
 
